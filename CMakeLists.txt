@@ -41,10 +41,10 @@ add_executable(DiscreteCosineTransformation
         src/Scene/Scene.h
         src/Utilities.cpp
         src/Utilities.h
-        src/BlendingFunctionsGraph/BlendingFunctionsGraph.cpp
-        src/BlendingFunctionsGraph/BlendingFunctionsGraph.h
+        src/Graph/Graph.cpp
+        src/Graph/Graph.h
         src/Button/Button.cpp
-        src/Button/Button.h)
+        src/Button/Button.h src/DiscreteCosineTransformation.cpp src/DiscreteCosineTransformation.h src/DataLoader.cpp src/DataLoader.h)
 
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)

@@ -2,8 +2,8 @@
 // Created by menegais1 on 02/05/2020.
 //
 
-#ifndef BEZIERCURVES_BLENDINGFUNCTIONSGRAPH_H
-#define BEZIERCURVES_BLENDINGFUNCTIONSGRAPH_H
+#ifndef DISCRETECOSINETRANSFORMATION_GRAPH_H
+#define DISCRETECOSINETRANSFORMATION_GRAPH_H
 
 
 #include "../Vectors/Float2.h"
@@ -12,7 +12,7 @@
 #include "../Button/Button.h"
 #include "../Panel/Panel.h"
 
-class BlendingFunctionsGraph : public Panel {
+class Graph : public Panel {
 public:
     void mouse(int button, int state, int wheel, int direction, int x, int y) override;
 
@@ -20,11 +20,11 @@ public:
 
     bool pointIntersectsObject(Float3 point) override;
 
-    BlendingFunctionsGraph(Float3 position, Float3 scale, Float3 backgroundColor,
-                           std::vector<std::function<float(float)>> blendingFunctions);
+    Graph(Float3 position, Float3 scale, Float3 backgroundColor,
+          std::vector<Float2> values);
 
 private:
-    std::vector<std::function<float(float)>> blendingFunctions;
+    std::vector<Float2> values;
     Float3 backgroundColor;
     bool mouseDragging;
     bool mouseInside;

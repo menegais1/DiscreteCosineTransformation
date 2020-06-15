@@ -9,6 +9,7 @@
 #include "Vectors/Float4.h"
 
 #define stringify(name) # name
+#define PI        3.14159265358979323846    /* pi */
 
 enum Channel {
     Red = 0,
