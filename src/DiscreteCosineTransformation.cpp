@@ -50,3 +50,12 @@ DiscreteCosineTransformation::difference(std::vector<float> originalValues, std:
     }
     return diff;
 }
+
+std::vector<Float2> DiscreteCosineTransformation::convertToValueTuple(std::vector<float> values) {
+    std::vector<Float2> tupleValues(values.size());
+    for (int i = 0; i < values.size(); ++i) {
+        tupleValues[i] = Float2(i, values[i]);
+    }
+
+    return tupleValues;
+}

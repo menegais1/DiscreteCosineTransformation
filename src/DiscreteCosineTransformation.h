@@ -13,6 +13,7 @@ public:
     std::vector<float> forwardDCT(std::vector<float> values);
     std::vector<float> inverseDCT(std::vector<float> values);
     std::vector<float> difference(std::vector<float> originalValues, std::vector<float> convertedValues);
+    std::vector<Float2> convertToValueTuple(std::vector<float> values);
 private:
     float C(int w);
 };

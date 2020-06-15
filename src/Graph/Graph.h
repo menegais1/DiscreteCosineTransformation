@@ -20,17 +20,19 @@ public:
 
     bool pointIntersectsObject(Float3 point) override;
 
-    Graph(Float3 position, Float3 scale, Float3 backgroundColor,
+    Graph(Float3 position, Float3 scale, Float4 backgroundColor,
           std::vector<Float2> values);
 
 private:
+    Float2 maxValue;
     std::vector<Float2> values;
-    Float3 backgroundColor;
     bool mouseDragging;
     bool mouseInside;
     Float2 currentMousePosition;
     Float2 lastMousePosition;
     Button *closeButton;
+
+    Float2 normalize(Float2 value);
 };
 
 

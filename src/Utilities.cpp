@@ -137,3 +137,13 @@ Float3 RandomColorGenerator(float saturation, float brightness) {
     rand = std::min(360.0, rand * 360);
     return HSVtoRGB(Float3(rand, saturation, brightness));
 }
+
+Float2 getMaximumValue(std::vector<Float2> values) {
+    Float2 max = Float2(abs(values[0].x), abs(values[0].y));
+    for (int i = 0; i < values.size(); ++i) {
+        Float2 cur = values[i];
+        if (abs(cur.x) > max.x) max.x = abs(cur.x);
+        if (abs(cur.y) > max.y) max.y = abs(cur.y);
+    }
+    return max;
+}

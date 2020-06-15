@@ -10,6 +10,7 @@
 
 
 #include <iostream>
+#include "Graph/Graph.h"
 #include "Canvas/gl_canvas2d.h"
 #include "Utilities.h"
 #include "Managers/GlobalManager.h"
@@ -46,8 +47,13 @@ int main(void) {
     for (int i = 0; i < data.size(); ++i) {
         std::cout << data[i] << std::endl;
     }
-//    std::vector<float> values = {8, 16, 24, 32, 40, 48, 56, 64};
-//    auto convertedValues = dct.forwardDCT(values);
+
+    std::vector<float> values = {8, 16, 24, 32, 40, 48, 56, 64};
+    Graph *input = new Graph(Float3(40, 40, 0), Float3(250, 300, 0), Float4(1, 1, 1, 0.2),
+                             dct.convertToValueTuple(values));
+    auto convertedValues = dct.forwardDCT(values);
+    Graph *dctValues = new Graph(Float3(400, 400, 0), Float3(250, 300, 0), Float4(1, 1, 1, 0.2),
+                                 dct.convertToValueTuple(convertedValues));
 //    auto inverseDCT = dct.inverseDCT(convertedValues);
 //    std::cout << "" << std::endl;
 //    for (int i = 0; i < convertedValues.size(); ++i) {

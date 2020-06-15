@@ -13,7 +13,7 @@
 
 class Panel : public CanvasObject {
 public:
-    Float3 backgroundColor;
+    Float4 backgroundColor;
     std::vector<CanvasObject *> children;
 
     Panel(std::vector<CanvasObject *> &children);
@@ -22,7 +22,7 @@ public:
 
     ~Panel();
 
-    Panel(Float3 position, Float3 scale, Float3 backgroundColor);
+    Panel(Float3 position, Float3 scale, Float4 backgroundColor);
 
     void setActive(bool isActive) override;
 

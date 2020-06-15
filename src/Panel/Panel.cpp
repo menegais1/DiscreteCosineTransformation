@@ -6,7 +6,7 @@ Panel::Panel(std::vector<CanvasObject *> &children) {
     this->children = children;
 }
 
-Panel::Panel(Float3 position, Float3 scale, Float3 backgroundColor) {
+Panel::Panel(Float3 position, Float3 scale, Float4 backgroundColor) {
     this->position = position;
     this->scale = scale;
     this->backgroundColor = backgroundColor;
