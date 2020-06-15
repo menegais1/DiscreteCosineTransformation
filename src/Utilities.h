@@ -50,7 +50,11 @@ std::vector<Float3> generatePentagon(Float3 center, Float3 scale);
 
 std::vector<Float3> generateHexagon(Float3 center, Float3 scale);
 
+Float2 getMaximumAbsValue(std::vector<Float2> values);
+
 Float2 getMaximumValue(std::vector<Float2> values);
+
+Float2 getMinimumValue(std::vector<Float2> values);
 
 bool leftMouseDown(int button, int state);
 

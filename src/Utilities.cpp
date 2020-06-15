@@ -138,7 +138,7 @@ Float3 RandomColorGenerator(float saturation, float brightness) {
     return HSVtoRGB(Float3(rand, saturation, brightness));
 }
 
-Float2 getMaximumValue(std::vector<Float2> values) {
+Float2 getMaximumAbsValue(std::vector<Float2> values) {
     Float2 max = Float2(abs(values[0].x), abs(values[0].y));
     for (int i = 0; i < values.size(); ++i) {
         Float2 cur = values[i];
@@ -146,4 +146,24 @@ Float2 getMaximumValue(std::vector<Float2> values) {
         if (abs(cur.y) > max.y) max.y = abs(cur.y);
     }
     return max;
+}
+
+Float2 getMaximumValue(std::vector<Float2> values) {
+    Float2 max = Float2(values[0].x, values[0].y);
+    for (int i = 0; i < values.size(); ++i) {
+        Float2 cur = values[i];
+        if (cur.x > max.x) max.x = cur.x;
+        if (cur.y > max.y) max.y = cur.y;
+    }
+    return max;
+}
+
+Float2 getMinimumValue(std::vector<Float2> values) {
+    Float2 min = Float2(values[0].x, values[0].y);
+    for (int i = 0; i < values.size(); ++i) {
+        Float2 cur = values[i];
+        if (cur.x < min.x) min.x = cur.x;
+        if (cur.y < min.y) min.y = cur.y;
+    }
+    return min;
 }

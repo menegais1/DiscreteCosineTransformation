@@ -23,8 +23,14 @@ public:
     Graph(Float3 position, Float3 scale, Float4 backgroundColor,
           std::vector<Float2> values);
 
+    Float4 lineColor = {0, 0, 0, 1};
+    Float4 labelColor = {0, 0, 0, 1};
+    std::string label = "";
 private:
+    Float2 padding = {40, 40};
+    Float2 normalizingValue;
     Float2 maxValue;
+    Float2 minValue;
     std::vector<Float2> values;
     bool mouseDragging;
     bool mouseInside;
@@ -33,6 +39,8 @@ private:
     Button *closeButton;
 
     Float2 normalize(Float2 value);
+
+    void drawLabels();
 };
 
 
