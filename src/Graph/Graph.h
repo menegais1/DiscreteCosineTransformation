@@ -12,6 +12,12 @@
 #include "../Button/Button.h"
 #include "../Panel/Panel.h"
 
+
+enum GraphType{
+    Line = 0,
+    Bar = 1,
+    Dot = 2
+};
 class Graph : public Panel {
 public:
     void mouse(int button, int state, int wheel, int direction, int x, int y) override;
@@ -26,6 +32,7 @@ public:
     Float4 lineColor = {0, 0, 0, 1};
     Float4 labelColor = {0, 0, 0, 1};
     std::string label = "";
+    GraphType type = GraphType::Line;
 private:
     Float2 padding = {40, 40};
     Float2 normalizingValue;

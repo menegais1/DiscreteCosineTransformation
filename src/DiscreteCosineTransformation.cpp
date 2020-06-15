@@ -59,3 +59,16 @@ std::vector<Float2> DiscreteCosineTransformation::convertToValueTuple(std::vecto
 
     return tupleValues;
 }
+
+std::vector<Float2> DiscreteCosineTransformation::baseFunctions(int u, int samples, float step) {
+    float m = samples / step;
+    std::vector<Float2> functions(m);
+    int cont = 0;
+    float fu = 0;
+    for (float x = 0; x < samples; x += step) {
+        fu = cos(((2 * x + 1) * u * PI) / (2.0 * samples));
+        functions[cont++] = Float2(x, fu);
+    }
+
+    return functions;
+}

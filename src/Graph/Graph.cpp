@@ -35,33 +35,53 @@ void Graph::render() {
     color(lineColor.x, lineColor.y, lineColor.z, lineColor.w);
     rect(position.x, position.y, position.x + scale.x, position.y + scale.y);
     line(position.x + padding.x, position.y + padding.y, position.x + padding.x, position.y + scale.y - padding.y);
-    line(position.x + padding.x, position.y +padding.y + (scale.y - 2 * padding.y) / 2 , position.x + scale.x - padding.x,
-         position.y +padding.y + (scale.y - 2 * padding.y) / 2 );
+    line(position.x + padding.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2,
+         position.x + scale.x - padding.x,
+         position.y + padding.y + (scale.y - 2 * padding.y) / 2);
 
 
-    Float2 init = Float2(position.x + padding.x,position.y +padding.y + (scale.y - 2 * padding.y) / 2 );
+    Float2 init = Float2(position.x + padding.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2);
     Float2 displaceAmount = Float2((scale.x - padding.x) / 2, (scale.y - 2 * padding.y) / 2);
-    for (int i = 0; i < values.size() - 1; ++i) {
-        Float2 p0 = normalize(values[i]);
-        Float2 p1 = normalize(values[i + 1]);
-        line(p0.x * displaceAmount.x + init.x, p0.y * displaceAmount.y + init.y, p1.x * displaceAmount.x + init.x,
-             p1.y * displaceAmount.y + init.y);
+
+    if (type == GraphType::Line) {
+        for (int i = 0; i < values.size() - 1; ++i) {
+            Float2 p0 = normalize(values[i]);
+            Float2 p1 = normalize(values[i + 1]);
+            line(p0.x * displaceAmount.x + init.x, p0.y * displaceAmount.y + init.y, p1.x * displaceAmount.x + init.x,
+                 p1.y * displaceAmount.y + init.y);
+        }
     }
+    if (type == GraphType::Bar) {
+        init.x = init.x + scale.x / values.size();
+        for (int i = 0; i < values.size(); ++i) {
+            Float2 p0 = normalize(values[i]);
+            line(p0.x * displaceAmount.x + init.x, init.y, p0.x * displaceAmount.x + init.x,
+                 p0.y * displaceAmount.y + init.y);
+        }
+    }
+
 }
 
 void Graph::drawLabels() {
+    Float2 init = Float2(position.x + padding.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2);
+    Float2 displaceAmount = Float2((scale.x - padding.x) / 2, (scale.y - 2 * padding.y) / 2);
     color(labelColor.x, labelColor.y, labelColor.z, labelColor.w);
     std::stringstream label;
     label << std::fixed;
-    label.precision(3);
+    label.precision(2);
     label << minValue.y;
-    text(position.x + padding.x, position.y + padding.y, label.str().c_str());
+    Float2 point = normalize(minValue);
+    text(position.x, point.y * displaceAmount.y + init.y, label.str().c_str());
     label.str(std::string());
     label << maxValue.y;
-    text(position.x + padding.x, position.y + scale.y - padding.y, label.str().c_str());
+    point = normalize(maxValue);
+    text(position.x, point.y * displaceAmount.y + init.y, label.str().c_str());
+    label.str(std::string());
+    label << 0.0;
+    text(position.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2, label.str().c_str());
     label.str(std::string());
     label << this->label;
-    text(position.x + scale.x / 2, position.y + scale.y - padding.y /2, label.str().c_str());
+    text(position.x, position.y + scale.y - padding.y / 2, label.str().c_str());
 }
 
 bool Graph::pointIntersectsObject(Float3 point) {

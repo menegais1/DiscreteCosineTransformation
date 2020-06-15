@@ -53,19 +53,31 @@ int main(void) {
                              dct.convertToValueTuple(values));
     input->label = "Input";
     auto convertedValues = dct.forwardDCT(values);
-    Graph *dctValues = new Graph(Float3(400, 400, 0), Float3(250, 300, 0), Float4(1, 1, 1, 0.2),
+    Graph *dctValues = new Graph(Float3(400, 400, 0), Float3(500, 300, 0), Float4(1, 1, 1, 0.2),
                                  dct.convertToValueTuple(convertedValues));
     dctValues->label = "DCT";
 
     auto inverseDCT = dct.inverseDCT(convertedValues);
-    Graph *reconstructed = new Graph(Float3(400, 400, 0), Float3(250, 300, 0), Float4(1, 1, 1, 0.2),
-                                 dct.convertToValueTuple(inverseDCT));
+    Graph *reconstructed = new Graph(Float3(400, 400, 0), Float3(500, 300, 0), Float4(1, 1, 1, 0.2),
+                                     dct.convertToValueTuple(inverseDCT));
     reconstructed->label = "IDCT";
 
     auto diff = dct.difference(values, inverseDCT);
-    Graph *diffGraph = new Graph(Float3(400, 400, 0), Float3(250, 300, 0), Float4(1, 1, 1, 0.2),
+    Graph *diffGraph = new Graph(Float3(400, 400, 0), Float3(500, 300, 0), Float4(1, 1, 1, 0.2),
                                  dct.convertToValueTuple(diff));
     diffGraph->label = "DIFF";
+
+
+    std::vector<Graph *> discreteBaseFunctions;
+    for (int i = 0; i < values.size(); i++) {
+        discreteBaseFunctions.push_back(new Graph(Float3(400, 400, 0), Float3(200, 200, 0), Float4(1, 1, 1, 0.2),
+                                                  dct.baseFunctions(i, values.size(), 1)));
+        std::string label("Discrete Base Function ");
+        discreteBaseFunctions[i]->label = label + std::to_string(i);
+        discreteBaseFunctions[i]->type = GraphType::Bar;
+
+    }
+
 //    std::cout << "" << std::endl;
 //    for (int i = 0; i < convertedValues.size(); ++i) {
 //        std::cout << convertedValues[i] << std::endl;
