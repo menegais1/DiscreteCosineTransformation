@@ -80,11 +80,20 @@ int main(void) {
     }
 
 
-    HorizontalSlider* slider=  new HorizontalSlider(Float3(200,200,0),Float3(100,10,0),Float4(0, 0, 0, 0.4),Float4(0,0,0,1));
+    HorizontalSlider *slider = new HorizontalSlider(Float3(200, 200, 0), Float3(100, 10, 0), Float4(0, 0, 0, 0.4),
+                                                    Float4(0, 0, 0, 1));
     slider->minValue = 0;
-    slider->maxValue = 10;
-    slider->steps = 10;
-    slider->addOnValueChangedListener([](float value)->void{
+    slider->maxValue = 25;
+    slider->steps = 25;
+    slider->addOnValueChangedListener([dctValues, reconstructed, diffGraph, values](float value) -> void {
+        auto quantizedValues = DiscreteCosineTransformation::applyQuantization(
+                DiscreteCosineTransformation::forwardDCT(values),
+                DiscreteCosineTransformation::generateQuantizationVector(values.size(), value), value);
+        auto reconstructedValues = DiscreteCosineTransformation::inverseDCT(quantizedValues);
+        dctValues->setValues(DiscreteCosineTransformation::convertToValueTuple(quantizedValues));
+        reconstructed->setValues(DiscreteCosineTransformation::convertToValueTuple(reconstructedValues));
+        diffGraph->setValues(DiscreteCosineTransformation::convertToValueTuple(
+                DiscreteCosineTransformation::difference(values, reconstructedValues)));
         std::cout << value << std::endl;
     });
 //    std::cout << "" << std::endl;

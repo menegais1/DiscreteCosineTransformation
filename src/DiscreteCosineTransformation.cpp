@@ -72,3 +72,28 @@ std::vector<Float2> DiscreteCosineTransformation::baseFunctions(int u, int sampl
 
     return functions;
 }
+
+std::vector<float> DiscreteCosineTransformation::generateQuantizationVector(int samples, int quantizationFactor) {
+
+    std::vector<float> quantizationVector(samples);
+    for (int i = 0; i < samples; ++i) {
+        quantizationVector[i] = 1 + (1 + i) * quantizationFactor;
+    }
+
+    return quantizationVector;
+}
+
+std::vector<float>
+DiscreteCosineTransformation::applyQuantization(std::vector<float> values, std::vector<float> quantizationVector,
+                                                int quantizationFactor) {
+    std::vector<float> quantizedValues(values.size());
+
+    for (int i = 0; i < values.size(); ++i) {
+        if (quantizationFactor == 0)
+            quantizedValues[i] = values[i];
+        else
+            quantizedValues[i] = floor(values[i] / quantizationVector[i]);
+    }
+
+    return quantizedValues;
+}

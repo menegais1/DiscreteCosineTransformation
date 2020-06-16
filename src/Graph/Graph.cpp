@@ -99,13 +99,7 @@ Graph::Graph(Float3 position, Float3 scale, Float4 backgroundColor,
              std::vector<Float2> values) : Panel(position, scale, backgroundColor) {
     this->mouseDragging = false;
     this->mouseInside = false;
-    this->values = std::move(values);
-    std::sort(this->values.begin(), this->values.end(), [](Float2 f, Float2 s) -> bool {
-        return f.x < s.x;
-    });
-    this->normalizingValue = getMaximumAbsValue(this->values);
-    this->maxValue = getMaximumValue(this->values);
-    this->minValue = getMinimumValue(this->values);
+    setValues(values);
 //    closeButton = new Button(position + scale - Float3(scale.x / 3, scale.y - 10, 0),
 //                             Float3(scale.x / 4, scale.y / 6, 0), Float3(0, 0, 0), "Close", Float3(1, 1, 1));
 //    closeButton->addListener([this] {
@@ -115,4 +109,14 @@ Graph::Graph(Float3 position, Float3 scale, Float4 backgroundColor,
 //    //this->setZIndex(100);
 //    children.push_back(closeButton);
 //    this->setActive(false);
+}
+
+void Graph::setValues(std::vector<Float2> values) {
+    this->values = std::move(values);
+    std::sort(this->values.begin(), this->values.end(), [](Float2 f, Float2 s) -> bool {
+        return f.x < s.x;
+    });
+    this->normalizingValue = getMaximumAbsValue(this->values);
+    this->maxValue = getMaximumValue(this->values);
+    this->minValue = getMinimumValue(this->values);
 }

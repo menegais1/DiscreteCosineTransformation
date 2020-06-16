@@ -29,6 +29,7 @@ public:
     Graph(Float3 position, Float3 scale, Float4 backgroundColor,
           std::vector<Float2> values);
 
+    void setValues(std::vector<Float2> values);
     Float4 lineColor = {0, 0, 0, 1};
     Float4 labelColor = {0, 0, 0, 1};
     std::string label = "";
