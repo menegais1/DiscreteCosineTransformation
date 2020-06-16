@@ -41,7 +41,7 @@ void Graph::render() {
 
 
     Float2 init = Float2(position.x + padding.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2);
-    Float2 displaceAmount = Float2((scale.x - padding.x) / 2, (scale.y - 2 * padding.y) / 2);
+    Float2 displaceAmount = Float2(scale.x - padding.x * 2, (scale.y - 2 * padding.y) / 2);
 
     if (type == GraphType::Line) {
         for (int i = 0; i < values.size() - 1; ++i) {
