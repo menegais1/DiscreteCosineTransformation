@@ -62,6 +62,13 @@ bool leftMouseUp(int button, int state);
 
 Float3 lerp(Float3 x0, Float3 x1, float t);
 
+float lerp(float v0, float v1, float t);
+
+float clamp(float v0, float v1, float v);
+
+float round(float v0, float v1, float v);
+
+
 Float3 RandomColorGenerator(float saturation, float brightness);
 
 Float3 HSVtoRGB(Float3 hsv);

@@ -39,6 +39,10 @@ void color(float r, float g, float b);
 
 void color(float r, float g, float b, float a);
 
+void color(Float4 color);
+
+void color(Float4 color);
+
 void clear(float r, float g, float b);
 
 //desenha texto na coordenada (x,y)

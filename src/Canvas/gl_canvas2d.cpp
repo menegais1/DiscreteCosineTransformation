@@ -112,6 +112,13 @@ void color(float r, float g, float b, float a) {
     glColor4d(r, g, b, a);
 }
 
+void color(Float4 color) {
+    glColor4d(color.x, color.y, color.z, color.w);
+}
+void color(Float3 color) {
+    glColor3d(color.x, color.y, color.z);
+}
+
 void special(int key, int, int) {
     keyboard(key + 100);
 }

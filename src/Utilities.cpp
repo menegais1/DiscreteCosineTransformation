@@ -48,6 +48,25 @@ Float3 lerp(Float3 x0, Float3 x1, float t) {
     return x0 * (1 - t) + x1 * t;
 }
 
+float lerp(float v0, float v1, float t) {
+    return v0 * (1 - t) + v1 * t;
+}
+
+float clamp(float v0, float v1, float v) {
+    if (v < v0) return v0;
+    if (v > v1) return v1;
+    return v;
+}
+
+float round(float v0, float v1, float v) {
+    float distV0 = abs(v - v0);
+    float distV1 = abs(v - v1);
+    if (distV0 < distV1) return v0;
+    if (distV1 > distV0) return v1;
+    return v1;
+
+}
+
 std::vector<Float3> generateCircle(Float3 center, Float3 scale, float sides) {
     float ang, x1, y1;
     float inc = PI_2 / sides;

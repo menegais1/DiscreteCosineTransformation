@@ -10,6 +10,7 @@
 
 
 #include <iostream>
+#include "Slider/HorizontalSlider.h"
 #include "Graph/Graph.h"
 #include "Canvas/gl_canvas2d.h"
 #include "Utilities.h"
@@ -78,6 +79,14 @@ int main(void) {
 
     }
 
+
+    HorizontalSlider* slider=  new HorizontalSlider(Float3(200,200,0),Float3(100,10,0),Float4(0, 0, 0, 0.4),Float4(0,0,0,1));
+    slider->minValue = 0;
+    slider->maxValue = 10;
+    slider->steps = 10;
+    slider->addOnValueChangedListener([](float value)->void{
+        std::cout << value << std::endl;
+    });
 //    std::cout << "" << std::endl;
 //    for (int i = 0; i < convertedValues.size(); ++i) {
 //        std::cout << convertedValues[i] << std::endl;
