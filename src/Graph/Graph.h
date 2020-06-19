@@ -34,6 +34,8 @@ public:
     Float4 labelColor = {0, 0, 0, 1};
     std::string label = "";
     GraphType type = GraphType::Line;
+    float dislocation = 4;
+    bool draggable = true;
 private:
     Float2 padding = {40, 40};
     Float2 normalizingValue;

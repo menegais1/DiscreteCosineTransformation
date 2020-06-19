@@ -12,11 +12,11 @@
 
 class Button : public CanvasObject {
 public:
-    Float3 backgroundColor;
-    Float3 textColor;
+    Float4 backgroundColor;
+    Float4 textColor;
     std::string title;
 
-    Button(Float3 position, Float3 scale, Float3 backgroundColor, std::string title, Float3 textColor);
+    Button(Float3 position, Float3 scale, Float4 backgroundColor, std::string title, Float4 textColor);
 
     void mouse(int button, int state, int wheel, int direction, int x, int y) override;
 

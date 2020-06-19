@@ -12,6 +12,7 @@
 
 
 void Graph::mouse(int button, int state, int wheel, int direction, int x, int y) {
+    if (!draggable) return;
     bool pointInside = isMouseInsideObject();
     currentMousePosition = Float2(x, y);
     if (leftMouseDown(button, state) && pointInside) {
@@ -36,11 +37,11 @@ void Graph::render() {
     rect(position.x, position.y, position.x + scale.x, position.y + scale.y);
     line(position.x + padding.x, position.y + padding.y, position.x + padding.x, position.y + scale.y - padding.y);
     line(position.x + padding.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2,
-         position.x + scale.x - padding.x,
+         position.x + scale.x - padding.x + dislocation,
          position.y + padding.y + (scale.y - 2 * padding.y) / 2);
 
 
-    Float2 init = Float2(position.x + padding.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2);
+    Float2 init = Float2(position.x + padding.x + dislocation, position.y + padding.y + (scale.y - 2 * padding.y) / 2);
     Float2 displaceAmount = Float2(scale.x - padding.x * 2, (scale.y - 2 * padding.y) / 2);
 
     if (type == GraphType::Line) {
@@ -52,7 +53,6 @@ void Graph::render() {
         }
     }
     if (type == GraphType::Bar) {
-        init.x = init.x + scale.x / values.size();
         for (int i = 0; i < values.size(); ++i) {
             Float2 p0 = normalize(values[i]);
             line(p0.x * displaceAmount.x + init.x, init.y, p0.x * displaceAmount.x + init.x,

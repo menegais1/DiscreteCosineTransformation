@@ -16,7 +16,7 @@ public:
     Float4 backgroundColor;
     std::vector<CanvasObject *> children;
 
-    Panel(std::vector<CanvasObject *> &children);
+    Panel(Float3 position, Float3 scale, Float4 backgroundColor,std::vector<CanvasObject *> &children);
 
     Panel();
 

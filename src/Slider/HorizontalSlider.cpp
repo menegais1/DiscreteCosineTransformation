@@ -4,6 +4,7 @@
 #include "../Canvas/gl_canvas2d.h"
 #include "../Utilities.h"
 #include <iostream>
+#include <sstream>
 
 void HorizontalSlider::mouse(int button, int state, int wheel, int direction, int x, int y) {
     bool pointInside = isMouseInsideObject();
@@ -16,7 +17,7 @@ void HorizontalSlider::mouse(int button, int state, int wheel, int direction, in
     if (mouseDragging) {
         currentMousePosition = Float2(x, y);
         if (x > position.x + scale.x)
-            currentMousePosition.x = position.x + scale.x;
+            currentMousePosition.x = position.x + scale.x - textSpace;
         if (y > position.y + scale.y)
             currentMousePosition.y = position.y + scale.y;
         if (x < position.x)
@@ -28,7 +29,7 @@ void HorizontalSlider::mouse(int button, int state, int wheel, int direction, in
         float value = lerp(minValue, maxValue, t);
         if (value != currentValue && t >= 0 && t <= 1) {
             currentValue = value;
-            currentMousePosition = Float2(lerp(position.x, position.x + scale.x, t), y);
+            currentMousePosition = Float2(lerp(position.x, position.x + scale.x - textSpace, t), y);
             notifyOnValueChangedListeners();
         } else {
             currentMousePosition = lastMousePosition;
@@ -41,11 +42,16 @@ void HorizontalSlider::mouse(int button, int state, int wheel, int direction, in
 
 void HorizontalSlider::render() {
     color(lineColor);
-    rect(position.x, position.y, position.x + scale.x, position.y + scale.y);
+    rect(position.x, position.y, position.x + scale.x - textSpace, position.y + scale.y);
     color(backgroundColor);
-    rectFill(position.x, position.y, position.x + scale.x, position.y + scale.y);
+    rectFill(position.x, position.y, position.x + scale.x - textSpace, position.y + scale.y);
     color(handleColor);
     circleFill(currentMousePosition.x, position.y + scale.y / 2, scale.y / 2, 30);
+    std::stringstream label;
+    label << std::fixed;
+    label.precision(2);
+    label << currentValue;
+    text(position.x + scale.x - textSpace + 1, position.y + scale.y / 4, label.str().c_str());
 }
 
 
@@ -82,7 +88,7 @@ void HorizontalSlider::translate(Float3 translationAmount) {
 
 float HorizontalSlider::getCurrentValueT(Float2 mousePosition) {
     float x = mousePosition.x - position.x;
-    float screenSteps = scale.x / steps;
+    float screenSteps = (scale.x - textSpace) / steps;
     float t = x / screenSteps / steps;
 
     float tIncrement = 1 / steps;

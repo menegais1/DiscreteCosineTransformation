@@ -16,6 +16,7 @@ public:
     float maxValue;
     float minValue;
     float steps;
+    float textSpace = 10;
     Float4 backgroundColor;
     Float4 handleColor;
     Float4 lineColor;

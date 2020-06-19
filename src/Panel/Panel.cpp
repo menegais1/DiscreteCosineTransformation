@@ -2,8 +2,11 @@
 #include <iostream>
 #include "../Managers/GlobalManager.h"
 
-Panel::Panel(std::vector<CanvasObject *> &children) {
+Panel::Panel(Float3 position, Float3 scale, Float4 backgroundColor, std::vector<CanvasObject *> &children) {
     this->children = children;
+    this->position = position;
+    this->scale = scale;
+    this->backgroundColor = backgroundColor;
 }
 
 Panel::Panel(Float3 position, Float3 scale, Float4 backgroundColor) {
