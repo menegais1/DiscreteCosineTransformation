@@ -104,9 +104,18 @@ void instantiateQuantizationSlider(Graph *dctValuesGraph, Graph *reconstructedGr
     slider->maxValue = 25;
     slider->steps = 25;
     slider->addOnValueChangedListener([dctValuesGraph, reconstructedGraph, diffGraph, values](float value) -> void {
+        auto dctValues = DiscreteCosineTransformation::forwardDCT(values);
+        std::cout <<"DCT VALUES"<< std::endl;
+        for (int i = 0; i < dctValues.size(); ++i) {
+            std::cout << dctValues[i] << std::endl;
+        }
         auto quantizedValues = DiscreteCosineTransformation::applyQuantization(
                 DiscreteCosineTransformation::forwardDCT(values),
                 DiscreteCosineTransformation::generateQuantizationVector(values.size(), value), value);
+        std::cout <<"Quantized Values"<< std::endl;
+        for (int i = 0; i < quantizedValues.size(); ++i) {
+            std::cout << quantizedValues[i] << std::endl;
+        }
         auto reconstructedValues = DiscreteCosineTransformation::inverseDCT(quantizedValues);
         dctValuesGraph->setValues(DiscreteCosineTransformation::convertToValueTuple(quantizedValues));
         reconstructedGraph->setValues(DiscreteCosineTransformation::convertToValueTuple(reconstructedValues));
@@ -121,14 +130,16 @@ int main(void) {
                "DiscreteCosineTransformation");
 
     DiscreteCosineTransformation dct;
-    DataLoader::saveData("input.dct", {8, 16, 24, 32, 40, 48, 56, 64});
+    //DataLoader::saveData("input.dct", {8, 16, 24, 32, 40, 48, 56, 64});
     auto data = DataLoader::readData("input.dct");
+    std::vector<float> values(data.size());
     std::cout << "" << std::endl;
     for (int i = 0; i < data.size(); ++i) {
+        values[i] = data[i];
         std::cout << data[i] << std::endl;
     }
 
-    std::vector<float> values = {8, 16, 24, 32, 40, 48, 56, 64};
+  //  values = {-48, 126, -8, -4, 10, 73, 91, -70};
     Graph *input = new Graph(Float3(40 + 40, 40 + 80, 0), Float3(400, 300, 0), Float4(1, 1, 1, 0.2),
                              dct.convertToValueTuple(values));
     input->label = "Input";

@@ -8,8 +8,8 @@
 std::vector<int> DataLoader::readData(std::string file) {
     FILE *f = fopen(file.c_str(), "rb");
 
-    uint length;
-    fread(&length, sizeof(uint), 1, f);
+    unsigned int length;
+    fread(&length, sizeof(unsigned int), 1, f);
     char *values = new char[length];
     fread(values, 1, length, f);
     fclose(f);
@@ -23,11 +23,11 @@ std::vector<int> DataLoader::readData(std::string file) {
 void DataLoader::saveData(std::string file, std::vector<int> data) {
     FILE *f = fopen(file.c_str(), "wb");
 
-    uint length = data.size();
-    fwrite(&length, sizeof(uint), 1, f);
+    unsigned int length = data.size();
+    fwrite(&length, sizeof(unsigned int), 1, f);
     for (int i = 0; i < length; ++i) {
         char value = (char) data[i];
-        fwrite(&value,1,1,f);
+        fwrite(&value, 1, 1, f);
     }
     fclose(f);
 }
