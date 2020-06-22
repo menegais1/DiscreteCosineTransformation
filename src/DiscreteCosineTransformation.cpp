@@ -73,11 +73,13 @@ std::vector<Float2> DiscreteCosineTransformation::baseFunctions(int u, int sampl
     return functions;
 }
 
+
+//Quantization factor as proposed in: https://en.wikipedia.org/wiki/Quantization_(signal_processing)
 std::vector<float> DiscreteCosineTransformation::generateQuantizationVector(int samples, int quantizationFactor) {
 
     std::vector<float> quantizationVector(samples);
     for (int i = 0; i < samples; ++i) {
-        quantizationVector[i] = (1 + i) * quantizationFactor;
+        quantizationVector[i] = quantizationFactor;
     }
 
     return quantizationVector;
@@ -92,7 +94,23 @@ DiscreteCosineTransformation::applyQuantization(std::vector<float> values, std::
         if (quantizationFactor == 0)
             quantizedValues[i] = values[i];
         else
-            quantizedValues[i] = (int) (values[i] / quantizationVector[i]);
+            quantizedValues[i] = floor((values[i] / quantizationVector[i]) + (1 / 2.0));
+    }
+
+    return quantizedValues;
+}
+
+
+std::vector<float>
+DiscreteCosineTransformation::applyInverseQuantization(std::vector<float> values, std::vector<float> quantizationVector,
+                                                       int quantizationFactor) {
+    std::vector<float> quantizedValues(values.size());
+
+    for (int i = 0; i < values.size(); ++i) {
+        if (quantizationFactor == 0)
+            quantizedValues[i] = values[i];
+        else
+            quantizedValues[i] = values[i] * quantizationVector[i];
     }
 
     return quantizedValues;

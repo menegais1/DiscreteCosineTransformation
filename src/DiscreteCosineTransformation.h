@@ -17,8 +17,11 @@ public:
     static std::vector<float> generateQuantizationVector(int samples, int quantizationFactor);
     static std::vector<float> applyQuantization(std::vector<float> values,std::vector<float> quantizationVector,int quantizationFactor);
     static std::vector<Float2> convertToValueTuple(std::vector<float> values);
+    static std::vector<float> applyInverseQuantization(std::vector<float> values, std::vector<float> quantizationVector, int quantizationFactor);
 private:
     static float C(int w);
+
+
 };
 
 #endif //DISCRETECOSINETRANSFORMATION_DISCRETECOSINETRANSFORMATION_H

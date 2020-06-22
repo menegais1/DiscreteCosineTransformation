@@ -101,22 +101,23 @@ void instantiateQuantizationSlider(Graph *dctValuesGraph, Graph *reconstructedGr
     HorizontalSlider *slider = new HorizontalSlider(Float3(380, 60, 0), Float3(100, 10, 0), Float4(0, 0, 0, 0.4),
                                                     Float4(0, 0, 0, 1));
     slider->minValue = 0;
-    slider->maxValue = 25;
-    slider->steps = 25;
+    slider->maxValue = 100;
+    slider->steps = 100;
     slider->addOnValueChangedListener([dctValuesGraph, reconstructedGraph, diffGraph, values](float value) -> void {
         auto dctValues = DiscreteCosineTransformation::forwardDCT(values);
-        std::cout <<"DCT VALUES"<< std::endl;
+        std::cout << "DCT VALUES" << std::endl;
         for (int i = 0; i < dctValues.size(); ++i) {
             std::cout << dctValues[i] << std::endl;
         }
+        auto quantizationVector = DiscreteCosineTransformation::generateQuantizationVector(values.size(), value);
         auto quantizedValues = DiscreteCosineTransformation::applyQuantization(
-                DiscreteCosineTransformation::forwardDCT(values),
-                DiscreteCosineTransformation::generateQuantizationVector(values.size(), value), value);
-        std::cout <<"Quantized Values"<< std::endl;
+                DiscreteCosineTransformation::forwardDCT(values), quantizationVector, value);
+        std::cout << "Quantized Values" << std::endl;
         for (int i = 0; i < quantizedValues.size(); ++i) {
             std::cout << quantizedValues[i] << std::endl;
         }
-        auto reconstructedValues = DiscreteCosineTransformation::inverseDCT(quantizedValues);
+        auto reconstructedValues = DiscreteCosineTransformation::inverseDCT(
+                DiscreteCosineTransformation::applyInverseQuantization(quantizedValues, quantizationVector, value));
         dctValuesGraph->setValues(DiscreteCosineTransformation::convertToValueTuple(quantizedValues));
         reconstructedGraph->setValues(DiscreteCosineTransformation::convertToValueTuple(reconstructedValues));
         diffGraph->setValues(DiscreteCosineTransformation::convertToValueTuple(
@@ -139,7 +140,7 @@ int main(void) {
         std::cout << data[i] << std::endl;
     }
 
-  //  values = {-48, 126, -8, -4, 10, 73, 91, -70};
+    //  values = {-48, 126, -8, -4, 10, 73, 91, -70};
     Graph *input = new Graph(Float3(40 + 40, 40 + 80, 0), Float3(400, 300, 0), Float4(1, 1, 1, 0.2),
                              dct.convertToValueTuple(values));
     input->label = "Input";
