@@ -30,7 +30,6 @@ void Graph::mouse(int button, int state, int wheel, int direction, int x, int y)
 void Graph::render() {
 
 
-    drawLabels();
     color(backgroundColor.x, backgroundColor.y, backgroundColor.z, backgroundColor.w);
     rectFill(position.x, position.y, position.x + scale.x, position.y + scale.y);
     color(lineColor.x, lineColor.y, lineColor.z, lineColor.w);
@@ -59,6 +58,8 @@ void Graph::render() {
                  p0.y * displaceAmount.y + init.y);
         }
     }
+
+    drawLabels();
 
 }
 

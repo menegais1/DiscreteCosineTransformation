@@ -38,40 +38,44 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
     GlobalManager::getInstance()->mouse(button, state, wheel, direction, x, y);
 }
 
-void instantiateBaseFunctionsGraphs() {
-
+void instantiateBaseFunctionsGraphs(int valuesCount) {
     std::vector<CanvasObject *> discreteBaseFunctions;
-    Float3 padding(20, 20, 0);
-    Float3 baseFunctionsScale(200, 200, 0);
-    Float3 panelPosition(400, 400, 0);
-    Float3 panelScale(baseFunctionsScale.x * 2 + padding.x * 2, baseFunctionsScale.y * 4 + padding.y * 2, 0);
-    for (int i = 0; i < 8; i++) {
+    Float3 padding(5, 5, 0);
+    Float3 baseFunctionsScale(175, 125, 0);
+    Float3 panelPosition(0, 80, 0);
+    int colNumber = ceil(sqrt(valuesCount));
+    Float3 panelScale(baseFunctionsScale.x * colNumber + padding.x * 2, baseFunctionsScale.y * colNumber+ padding.y * 2, 0);
+    for (int i = 0; i < valuesCount; i++) {
         Graph *g = new Graph(panelPosition + padding +
-                             Float3((i % 2) * baseFunctionsScale.x, (i / 2) * baseFunctionsScale.y, 0),
-                             baseFunctionsScale, Float4(1, 1, 1, 0.2),
-                             DiscreteCosineTransformation::baseFunctions(i, 8, 1));
+                             Float3((i % colNumber) * baseFunctionsScale.x, (i / colNumber) * baseFunctionsScale.y, 0),
+                             baseFunctionsScale, Float4(1, 1, 1, 0.7),
+                             DiscreteCosineTransformation::baseFunctions(i, valuesCount, 1));
         std::string label("DCT BASE ");
         g->label = label + std::to_string(i);
         g->type = GraphType::Bar;
         g->draggable = false;
+        g->padding = Float2(10,30);
+        g->labelColor = Float4(0.8,0,0,1);
         discreteBaseFunctions.push_back(g);
     }
     BaseFunctionsPanel *discreteBaseFunctionsPanel = new BaseFunctionsPanel(panelPosition, panelScale,
-                                                                            Float4(1, 1, 1, 0.2),
+                                                                            Float4(1, 1, 1, 0.7),
                                                                             discreteBaseFunctions);
 
     discreteBaseFunctionsPanel->setZIndex(10);
     discreteBaseFunctionsPanel->setActive(false);
     std::vector<CanvasObject *> continuosBaseFunctions;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < valuesCount; i++) {
         Graph *g = new Graph(panelPosition + padding +
-                             Float3((i % 2) * baseFunctionsScale.x, (i / 2) * baseFunctionsScale.y, 0),
-                             baseFunctionsScale, Float4(1, 1, 1, 0.2),
-                             DiscreteCosineTransformation::baseFunctions(i, 8, 0.1));
+                             Float3((i % colNumber) * baseFunctionsScale.x, (i / colNumber) * baseFunctionsScale.y, 0),
+                             baseFunctionsScale, Float4(1, 1, 1, 0.7),
+                             DiscreteCosineTransformation::baseFunctions(i, valuesCount, 0.1));
         std::string label("DCT BASE ");
         g->label = label + std::to_string(i);
         g->type = GraphType::Line;
         g->draggable = false;
+        g->padding = Float2(10,30);
+        g->labelColor = Float4(0.8,0,0,1);
         continuosBaseFunctions.push_back(g);
 
     }
@@ -131,7 +135,7 @@ int main(void) {
                "DiscreteCosineTransformation");
 
     DiscreteCosineTransformation dct;
-    //DataLoader::saveData("input.dct", {8, 16, 24, 32, 40, 48, 56, 64});
+   DataLoader::saveData("input.dct", {8, 16, 24, 32, 40, 48, 56, 64,-125,-12,40});
     auto data = DataLoader::readData("input.dct");
     std::vector<float> values(data.size());
     std::cout << "" << std::endl;
@@ -160,7 +164,7 @@ int main(void) {
                                  dct.convertToValueTuple(diff));
     diffGraph->label = "DIFF";
 
-    instantiateBaseFunctionsGraphs();
+    instantiateBaseFunctionsGraphs(values.size());
     instantiateQuantizationSlider(dctValues, reconstructed, diffGraph, values);
 
     Scene *scene = new Scene();

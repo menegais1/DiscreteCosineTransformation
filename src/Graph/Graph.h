@@ -36,8 +36,8 @@ public:
     GraphType type = GraphType::Line;
     float dislocation = 4;
     bool draggable = true;
-private:
     Float2 padding = {40, 40};
+private:
     Float2 normalizingValue;
     Float2 maxValue;
     Float2 minValue;
