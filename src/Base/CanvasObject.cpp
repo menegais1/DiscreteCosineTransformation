@@ -26,6 +26,7 @@ bool CanvasObject::getActive() {
 }
 
 bool CanvasObject::checkIfCanExecuteCallback() {
+    if(!isValid) return false;
     if (lastActiveState != isActive) {
         bool tmp = lastActiveState;
         lastActiveState = isActive;

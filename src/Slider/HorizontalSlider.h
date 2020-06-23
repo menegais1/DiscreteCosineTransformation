@@ -35,6 +35,7 @@ public:
 
     void setValues(float minValue, float maxValues, float steps);
 
+    void setCurValue(float curValue);
 
 private:
     float maxValue;

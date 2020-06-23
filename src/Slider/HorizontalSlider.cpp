@@ -110,3 +110,11 @@ float HorizontalSlider::getCurrentValueT(Float2 mousePosition) {
     }
     return t;
 }
+
+void HorizontalSlider::setCurValue(float curValue) {
+
+    currentValue = curValue;
+    float t = (curValue - minValue) / (maxValue - minValue);
+    std::cout << t << std::endl;
+    currentMousePosition = Float2(lerp(position.x, position.x + scale.x - textSpace, t), currentMousePosition.y);
+}

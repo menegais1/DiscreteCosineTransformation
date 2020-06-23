@@ -16,6 +16,8 @@ public:
 
     BaseFunctionsPanel(Float3 position, Float3 scale, Float4 backgroundColor, std::vector<CanvasObject *> &children);
 
+    bool pointIntersectsObject(Float3 point) override;
+
 private:
     Float2 currentMousePosition;
     bool mouseDragging;

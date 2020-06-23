@@ -33,8 +33,10 @@ bool Scene::pointIntersectsObject(Float3 point) {
 
 
 void Scene::deleteBaseFunctionsPanel() {
-    GlobalManager::getInstance()->deleteObject(discreteBaseFunctionsPanel);
-    GlobalManager::getInstance()->deleteObject(continuousBaseFunctionsPanel);
+    GlobalManager::getInstance()->deleteObject(
+            discreteBaseFunctionsPanel);
+    GlobalManager::getInstance()->deleteObject(
+            continuousBaseFunctionsPanel);
     for (int i = 0; i < discreteBaseFunctions.size(); ++i) {
         GlobalManager::getInstance()->deleteObject(discreteBaseFunctions[i]);
     }
@@ -97,18 +99,10 @@ void Scene::instantiateBaseFunctionsGraphs(int valuesCount) {
 void Scene::updateDctValues(float quantizationValue = 0) {
     inputGraph->setValues(DiscreteCosineTransformation::convertToValueTuple(curValues));
     auto dctValues = DiscreteCosineTransformation::forwardDCT(curValues);
-    std::cout << "DCT VALUES" << std::endl;
-    for (int i = 0; i < dctValues.size(); ++i) {
-        std::cout << dctValues[i] << std::endl;
-    }
     auto quantizationVector = DiscreteCosineTransformation::generateQuantizationVector(curValues.size(),
                                                                                        quantizationValue);
     auto quantizedValues = DiscreteCosineTransformation::applyQuantization(
             DiscreteCosineTransformation::forwardDCT(curValues), quantizationVector, quantizationValue);
-    std::cout << "Quantized Values" << std::endl;
-    for (int i = 0; i < quantizedValues.size(); ++i) {
-        std::cout << quantizedValues[i] << std::endl;
-    }
     auto reconstructedValues = DiscreteCosineTransformation::inverseDCT(
             DiscreteCosineTransformation::applyInverseQuantization(quantizedValues, quantizationVector,
                                                                    quantizationValue));
@@ -136,28 +130,36 @@ void Scene::instantiateSampleButtons() {
                                               Float4(0, 0, 0, 0.4),
                                               Float4(0, 0, 0, 1));
     sampleNumberSlider->setValues(8, 64, 64 - 8);
-
+    sampleNumberSlider->addOnValueChangedListener([this](float value) {
+        auto data = DiscreteCosineTransformation::generateRandomValues(value);
+        std::vector<float> values(data.size());
+        for (int i = 0; i < data.size(); ++i) {
+            values[i] = data[i];
+        }
+        curValues = values;
+        updateDctValues(quantizationSlider->currentValue);
+    });
     Button *loadSamplesButton = new Button(Float3(550, 40, 40), Float3(160, 40, 40), Float4(0, 0, 0, 0.3),
                                            "Load Data", Float4(1, 1, 1, 1));
     loadSamplesButton->addListener([this]() {
         auto data = DataLoader::readData("input.dct");
         std::vector<float> values(data.size());
-        std::cout << "" << std::endl;
         for (int i = 0; i < data.size(); ++i) {
             values[i] = data[i];
-            std::cout << data[i] << std::endl;
         }
         curValues = values;
         updateDctValues(quantizationSlider->currentValue);
-        deleteBaseFunctionsPanel();
-        instantiateBaseFunctionsGraphs(curValues.size());
+        sampleNumberSlider->setCurValue(curValues.size());
     });
 
     Button *saveSamplesButton = new Button(Float3(550 + 165, 40, 40), Float3(160, 40, 40), Float4(0, 0, 0, 0.3),
                                            "Save Data", Float4(1, 1, 1, 1));
     saveSamplesButton->addListener([this]() {
-        DataLoader::saveData("input.dct",
-                             DiscreteCosineTransformation::generateRandomValues(sampleNumberSlider->currentValue));
+        std::vector<int> values(curValues.size());
+        for (int i = 0; i < curValues.size(); ++i) {
+            values[i] = curValues[i];
+        }
+        DataLoader::saveData("input.dct", values);
     });
 
 
@@ -166,10 +168,8 @@ void Scene::instantiateSampleButtons() {
 Scene::Scene() {
     auto data = DataLoader::readData("input.dct");
     std::vector<float> values(data.size());
-    std::cout << "" << std::endl;
     for (int i = 0; i < data.size(); ++i) {
         values[i] = data[i];
-        std::cout << data[i] << std::endl;
     }
     curValues = values;
     inputGraph = new Graph(Float3(40 + 40, 40 + 80, 0), Float3(400, 300, 0), Float4(1, 1, 1, 0.2),
@@ -194,15 +194,25 @@ Scene::Scene() {
     instantiateBaseFunctionsGraphs(values.size());
     instantiateQuantizationSlider();
     instantiateSampleButtons();
+    discreteBaseFunctionsPanel->setActive(false);
+    continuousBaseFunctionsPanel->setActive(false);
 
     Button *discreteBaseFunctionsButton = new Button(Float3(40, 40, 40), Float3(160, 40, 40), Float4(0, 0, 0, 0.3),
                                                      "Base Discrete", Float4(1, 1, 1, 1));
     discreteBaseFunctionsButton->addListener([this]() {
+        if (!discreteBaseFunctionsPanel->getActive()) {
+            deleteBaseFunctionsPanel();
+            instantiateBaseFunctionsGraphs(curValues.size());
+        }
         discreteBaseFunctionsPanel->setActive(!discreteBaseFunctionsPanel->getActive());
     });
     Button *continuosBaseFunctionsButton = new Button(Float3(210, 40, 40), Float3(160, 40, 40), Float4(0, 0, 0, 0.3),
                                                       "Base Continuous", Float4(1, 1, 1, 1));
     continuosBaseFunctionsButton->addListener([this]() {
+        if (!continuousBaseFunctionsPanel->getActive()) {
+            deleteBaseFunctionsPanel();
+            instantiateBaseFunctionsGraphs(curValues.size());
+        }
         continuousBaseFunctionsPanel->setActive(!continuousBaseFunctionsPanel->getActive());
     });
 }
