@@ -20,7 +20,7 @@ public:
 
     Panel();
 
-    ~Panel();
+    ~Panel() override;
 
     Panel(Float3 position, Float3 scale, Float4 backgroundColor);
 

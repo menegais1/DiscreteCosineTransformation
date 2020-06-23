@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="rnmenegais" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../__bin/Debug/rnmenegais" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../" />
+				<Option object_output="../__obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="../__bin/Release/rnmenegais" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../" />
+				<Option object_output="../__obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-O2 -Wall" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Linker>
+			<!--LINUX
+			<Add option="-lGL" />
+			<Add option="-lGLU" />
+			<Add option="-lglut" />-->
+			<!--WINDOWS			-->
+			<Add library="../lib/libglu32.a" />
+			<Add library="../lib/libopengl32.a" />
+			<Add library="../lib/freeglut.lib" />
+
+		</Linker>
+	            <Unit filename="include/GL/freeglut.h"></Unit>
+           		<Unit filename="include/GL/freeglut_ext.h"></Unit>
+           		<Unit filename="include/GL/freeglut_std.h"></Unit>
+           		<Unit filename="include/GL/glut.h"></Unit>
+           		<Unit filename="src/Base/CanvasObject.cpp"></Unit>
+           		<Unit filename="src/Base/CanvasObject.h"></Unit>
+           		<Unit filename="src/Base/IKeyboard.h"></Unit>
+           		<Unit filename="src/Base/IMouse.h"></Unit>
+           		<Unit filename="src/Base/IRender.h"></Unit>
+           		<Unit filename="src/Base/ITransformable.h"></Unit>
+           		<Unit filename="src/Button/Button.cpp"></Unit>
+           		<Unit filename="src/Button/Button.h"></Unit>
+           		<Unit filename="src/Canvas/gl_canvas2d.cpp"></Unit>
+           		<Unit filename="src/Canvas/gl_canvas2d.h"></Unit>
+           		<Unit filename="src/DataLoader.cpp"></Unit>
+           		<Unit filename="src/DataLoader.h"></Unit>
+           		<Unit filename="src/DiscreteCosineTransformation.cpp"></Unit>
+           		<Unit filename="src/DiscreteCosineTransformation.h"></Unit>
+           		<Unit filename="src/Graph/Graph.cpp"></Unit>
+           		<Unit filename="src/Graph/Graph.h"></Unit>
+           		<Unit filename="src/Managers/GlobalManager.cpp"></Unit>
+           		<Unit filename="src/Managers/GlobalManager.h"></Unit>
+           		<Unit filename="src/Panel/Panel.cpp"></Unit>
+           		<Unit filename="src/Panel/Panel.h"></Unit>
+           	    <Unit filename="src/BaseFunctionsPanel.cpp"> </Unit>
+                <Unit filename="src/BaseFunctionsPanel.h"></Unit>
+           		<Unit filename="src/Scene/Scene.cpp"></Unit>
+           		<Unit filename="src/Scene/Scene.h"></Unit>
+           		<Unit filename="src/Slider/HorizontalSlider.cpp"></Unit>
+           		<Unit filename="src/Slider/HorizontalSlider.h"></Unit>
+           		<Unit filename="src/Utilities.cpp"></Unit>
+           		<Unit filename="src/Utilities.h"></Unit>
+           		<Unit filename="src/Vectors/Float2.cpp"></Unit>
+           		<Unit filename="src/Vectors/Float2.h"></Unit>
+           		<Unit filename="src/Vectors/Float3.cpp"></Unit>
+           		<Unit filename="src/Vectors/Float3.h"></Unit>
+           		<Unit filename="src/Vectors/Float4.cpp"></Unit>
+           		<Unit filename="src/Vectors/Float4.h"></Unit>
+           		<Unit filename="src/main.cpp"></Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

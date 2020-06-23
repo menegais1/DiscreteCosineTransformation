@@ -4,7 +4,7 @@
 
 #include "Canvas/gl_canvas2d.h"
 #include "BaseFunctionsPanel.h"
-
+#include "Panel/Panel.h"
 void BaseFunctionsPanel::mouse(int button, int state, int wheel, int direction, int x, int y) {
     bool pointInside = isMouseInsideObject();
     currentMousePosition = Float2(x, y);

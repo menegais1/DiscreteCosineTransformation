@@ -1,11 +1,11 @@
 
-#include "Button/Button.h"
-#include "DataLoader.h"
-#include "DiscreteCosineTransformation.h"
-#include "Slider/HorizontalSlider.h"
-#include "Graph/Graph.h"
-#include "BaseFunctionsPanel.h"
-#include "Managers/GlobalManager.h"
+#include "../Button/Button.h"
+#include "../DataLoader.h"
+#include "../DiscreteCosineTransformation.h"
+#include "../Slider/HorizontalSlider.h"
+#include "../Graph/Graph.h"
+#include "../BaseFunctionsPanel.h"
+#include "../Managers/GlobalManager.h"
 #include "Scene.h"
 
 #include <cmath>

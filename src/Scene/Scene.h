@@ -6,7 +6,7 @@
 #define SCENE_H
 
 #include <vector>
-#include "Base/CanvasObject.h"
+#include "../Base/CanvasObject.h"
 #include "../BaseFunctionsPanel.h"
 #include "../Vectors/Float3.h"
 #include "../Vectors/Float4.h"

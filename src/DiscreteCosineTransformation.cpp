@@ -4,9 +4,9 @@
 
 #include <cmath>
 #include <ctime>
+#include <stdlib.h>
 #include "Utilities.h"
 #include "DiscreteCosineTransformation.h"
-
 
 std::vector<float> DiscreteCosineTransformation::forwardDCT(std::vector<float> values) {
     int m = values.size();

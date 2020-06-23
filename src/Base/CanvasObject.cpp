@@ -58,7 +58,7 @@ CanvasObject::~CanvasObject() {
 }
 
 bool CanvasObject::isMouseInsideObject() {
-    GlobalManager::getInstance()->isMouseInsideObject(this);
+    return GlobalManager::getInstance()->isMouseInsideObject(this);
 }
 
 void CanvasObject::translate(Float3 translationAmount) {

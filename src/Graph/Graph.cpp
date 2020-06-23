@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iomanip>
 #include "Graph.h"
+#include "../Utilities.h"
 
 
 void Graph::mouse(int button, int state, int wheel, int direction, int x, int y) {

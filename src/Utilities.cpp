@@ -158,11 +158,11 @@ Float3 RandomColorGenerator(float saturation, float brightness) {
 }
 
 Float2 getMaximumAbsValue(std::vector<Float2> values) {
-    Float2 max = Float2(abs(values[0].x), abs(values[0].y));
+    Float2 max = Float2(std::abs(values[0].x), std::abs(values[0].y));
     for (int i = 0; i < values.size(); ++i) {
         Float2 cur = values[i];
-        if (abs(cur.x) > max.x) max.x = abs(cur.x);
-        if (abs(cur.y) > max.y) max.y = abs(cur.y);
+        if (std::abs(cur.x) > max.x) max.x = std::abs(cur.x);
+        if (std::abs(cur.y) > max.y) max.y = std::abs(cur.y);
     }
     return max;
 }
