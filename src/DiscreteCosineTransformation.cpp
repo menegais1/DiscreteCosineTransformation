@@ -3,6 +3,7 @@
 //
 
 #include <cmath>
+#include <ctime>
 #include "Utilities.h"
 #include "DiscreteCosineTransformation.h"
 
@@ -114,4 +115,15 @@ DiscreteCosineTransformation::applyInverseQuantization(std::vector<float> values
     }
 
     return quantizedValues;
+}
+
+std::vector<int> DiscreteCosineTransformation::generateRandomValues(int samples) {
+
+    srand(time(nullptr));
+    std::vector<int> values(samples);
+    for (int i = 0; i < samples; ++i) {
+        values[i] = rand() % 255 - 128;
+    }
+
+    return values;
 }

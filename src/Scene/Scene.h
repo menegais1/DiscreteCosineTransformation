@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "Base/CanvasObject.h"
+#include "../BaseFunctionsPanel.h"
 #include "../Vectors/Float3.h"
 #include "../Vectors/Float4.h"
 
@@ -35,6 +36,18 @@ enum SceneMode {
 
 class Scene : public CanvasObject {
 public:
+
+    Graph *inputGraph;
+    Graph *dctGraph;
+    Graph *idctGraph;
+    Graph *diffGraph;
+    std::vector<float> curValues;
+    HorizontalSlider* sampleNumberSlider;
+    HorizontalSlider* quantizationSlider;
+    std::vector<CanvasObject *> discreteBaseFunctions;
+    std::vector<CanvasObject *> continuosBaseFunctions;
+    BaseFunctionsPanel *discreteBaseFunctionsPanel;
+    BaseFunctionsPanel *continuousBaseFunctionsPanel;
     void mouse(int button, int state, int wheel, int direction, int x, int y) override;
 
     void keyboardUp(int key) override;
@@ -47,6 +60,15 @@ public:
 
     Scene();
 
+    void instantiateBaseFunctionsGraphs(int valuesCount);
+
+    void instantiateSampleButtons();
+
+    void instantiateQuantizationSlider();
+
+    void updateDctValues(float quantizationValue);
+
+    void deleteBaseFunctionsPanel();
 };
 
 #endif

@@ -18,6 +18,7 @@ public:
     static std::vector<float> applyQuantization(std::vector<float> values,std::vector<float> quantizationVector,int quantizationFactor);
     static std::vector<Float2> convertToValueTuple(std::vector<float> values);
     static std::vector<float> applyInverseQuantization(std::vector<float> values, std::vector<float> quantizationVector, int quantizationFactor);
+    static std::vector<int> generateRandomValues(int samples);
 private:
     static float C(int w);
 

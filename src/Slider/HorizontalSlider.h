@@ -13,9 +13,7 @@ class HorizontalSlider : public CanvasObject {
 public:
 
     float currentValue;
-    float maxValue;
-    float minValue;
-    float steps;
+
     float textSpace = 10;
     Float4 backgroundColor;
     Float4 handleColor;
@@ -35,8 +33,14 @@ public:
 
     void notifyOnValueChangedListeners();
 
+    void setValues(float minValue, float maxValues, float steps);
+
 
 private:
+    float maxValue;
+    float minValue;
+    float steps;
+
     bool mouseDragging;
     bool mouseInside;
     Float2 currentMousePosition;
@@ -45,6 +49,7 @@ private:
     float getCurrentValueT(Float2 mousePosition);
 
     std::vector<std::function<void(float value)>> onValueChangedListeners;
+
 };
 
 #endif

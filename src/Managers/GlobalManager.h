@@ -48,6 +48,7 @@ private:
     static GlobalManager *instance;
     //The order of the objects is descending, so what will be rendered first is last
     std::vector<CanvasObject *> objects;
+    std::vector<CanvasObject *> disposeObjectsList;
 
     GlobalManager();
 

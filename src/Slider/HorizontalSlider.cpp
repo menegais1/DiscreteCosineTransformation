@@ -81,6 +81,15 @@ bool HorizontalSlider::pointIntersectsObject(Float3 point) {
            isPointInsideCircle(point, Float2(currentMousePosition.x, position.y + scale.y / 2), scale.y / 2);
 }
 
+void HorizontalSlider::setValues(float minValue, float maxValues, float steps) {
+    this->minValue = minValue;
+    this->maxValue = maxValues;
+    this->steps = steps;
+    this->currentValue = minValue;
+    this->currentMousePosition = Float2(lerp(position.x, position.x + scale.x - textSpace, 0),
+                                        this->currentMousePosition.y);
+}
+
 void HorizontalSlider::translate(Float3 translationAmount) {
     CanvasObject::translate(translationAmount);
     currentMousePosition = currentMousePosition + Float2(translationAmount.x, translationAmount.y);
