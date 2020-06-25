@@ -130,6 +130,7 @@ void Scene::instantiateSampleButtons() {
                                               Float4(0, 0, 0, 0.4),
                                               Float4(0, 0, 0, 1));
     sampleNumberSlider->setValues(8, 64, 64 - 8);
+    sampleNumberSlider->setCurValue(curValues.size());
     sampleNumberSlider->addOnValueChangedListener([this](float value) {
         auto data = DiscreteCosineTransformation::generateRandomValues(value);
         std::vector<float> values(data.size());
