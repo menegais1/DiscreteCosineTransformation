@@ -62,7 +62,7 @@ std::vector<Float2> DiscreteCosineTransformation::convertToValueTuple(std::vecto
 }
 
 std::vector<Float2> DiscreteCosineTransformation::baseFunctions(int u, int samples, float step) {
-    float m = samples / step;
+    int m = std::ceil((samples / step) + 0.5);
     std::vector<Float2> functions(m);
     int cont = 0;
     float fu = 0;

@@ -33,6 +33,8 @@ bool Scene::pointIntersectsObject(Float3 point) {
 
 
 void Scene::deleteBaseFunctionsPanel() {
+    discreteBaseFunctionsPanel->children.clear();
+    continuousBaseFunctionsPanel->children.clear();
     GlobalManager::getInstance()->deleteObject(
             discreteBaseFunctionsPanel);
     GlobalManager::getInstance()->deleteObject(

@@ -11,6 +11,7 @@
 #include <functional>
 #include "../Button/Button.h"
 #include "../Panel/Panel.h"
+#include <sstream>
 
 
 enum GraphType{
@@ -38,6 +39,7 @@ public:
     bool draggable = true;
     Float2 padding = {40, 40};
 private:
+    std::stringstream labelStream;
     Float2 normalizingValue;
     Float2 maxValue;
     Float2 minValue;
@@ -46,7 +48,6 @@ private:
     bool mouseInside;
     Float2 currentMousePosition;
     Float2 lastMousePosition;
-    Button *closeButton;
 
     Float2 normalize(Float2 value);
 

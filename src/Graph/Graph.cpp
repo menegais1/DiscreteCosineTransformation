@@ -29,8 +29,6 @@ void Graph::mouse(int button, int state, int wheel, int direction, int x, int y)
 }
 
 void Graph::render() {
-
-
     color(backgroundColor.x, backgroundColor.y, backgroundColor.z, backgroundColor.w);
     rectFill(position.x, position.y, position.x + scale.x, position.y + scale.y);
     color(lineColor.x, lineColor.y, lineColor.z, lineColor.w);
@@ -65,25 +63,23 @@ void Graph::render() {
 }
 
 void Graph::drawLabels() {
+    labelStream.str(std::string());
     Float2 init = Float2(position.x + padding.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2);
     Float2 displaceAmount = Float2((scale.x - padding.x) / 2, (scale.y - 2 * padding.y) / 2);
     color(labelColor.x, labelColor.y, labelColor.z, labelColor.w);
-    std::stringstream label;
-    label << std::fixed;
-    label.precision(2);
-    label << minValue.y;
+    labelStream << minValue.y;
     Float2 point = normalize(minValue);
-    text(position.x, point.y * displaceAmount.y + init.y, label.str().c_str());
-    label.str(std::string());
-    label << maxValue.y;
+    text(position.x, point.y * displaceAmount.y + init.y, labelStream.str().c_str());
+    labelStream.str(std::string());
+    labelStream << maxValue.y;
     point = normalize(maxValue);
-    text(position.x, point.y * displaceAmount.y + init.y, label.str().c_str());
-    label.str(std::string());
-    label << 0.0;
-    text(position.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2, label.str().c_str());
-    label.str(std::string());
-    label << this->label;
-    text(position.x, position.y + scale.y - padding.y / 2, label.str().c_str());
+    text(position.x, point.y * displaceAmount.y + init.y, labelStream.str().c_str());
+    labelStream.str(std::string());
+    labelStream << 0.0;
+    text(position.x, position.y + padding.y + (scale.y - 2 * padding.y) / 2, labelStream.str().c_str());
+    labelStream.str(std::string());
+    labelStream << this->label;
+    text(position.x, position.y + scale.y - padding.y / 2, labelStream.str().c_str());
 }
 
 bool Graph::pointIntersectsObject(Float3 point) {
@@ -102,15 +98,8 @@ Graph::Graph(Float3 position, Float3 scale, Float4 backgroundColor,
     this->mouseDragging = false;
     this->mouseInside = false;
     setValues(values);
-//    closeButton = new Button(position + scale - Float3(scale.x / 3, scale.y - 10, 0),
-//                             Float3(scale.x / 4, scale.y / 6, 0), Float3(0, 0, 0), "Close", Float3(1, 1, 1));
-//    closeButton->addListener([this] {
-//        this->setActive(false);
-//        this->notifyOnActivateListeners();
-//    });
-//    //this->setZIndex(100);
-//    children.push_back(closeButton);
-//    this->setActive(false);
+    labelStream << std::fixed;
+    labelStream.precision(2);
 }
 
 void Graph::setValues(std::vector<Float2> values) {
